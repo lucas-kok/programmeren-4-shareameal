@@ -1,11 +1,3 @@
-class Movie {
-    constructor(id) {}
-}
-
-class User {
-    constructor(name, email) {}
-}
-
 class Database {
     movieId = 1;
     userId = 1;
@@ -14,58 +6,6 @@ class Database {
     users = [];
 
     constructor() {}
-
-    // --------------------------------- Begin Table Movie ----------------------------------- //
-    addMovie(info) {
-        const id = this.movieId;
-        const movie = {
-            id,
-            ...info,
-        };
-
-        this.movies.push(movie);
-        console.log(movie);
-
-        this.movieId++;
-
-        return movie;
-    }
-
-    getAllMovies() {
-        return this.movies;
-    }
-
-    getMovieFromId(id) {
-        console.log(`Searching movie with Id ${movieId}`);
-        const movie = this.movies.filter((item) => item.id == id);
-
-        console.log(`Search results: ${movie}`);
-
-        return movie.length == 0 ? null : movie[0];
-    }
-
-    deleteAllMovies() {
-        this.movies = [];
-
-        console.log(`Table movies emptied`);
-    }
-
-    deleteMovieFromId(id) {
-        const movie = this.getMovieFromId(id);
-        console.log(`Deleting: ${movie}`);
-
-        if (movie != null) {
-            const index = this.movies.indexOf(movie);
-
-            if (index < 0) return;
-
-            this.movies.splice(index, 1);
-        }
-
-        return movie;
-    }
-
-    // --------------------------------- End Table Movie ----------------------------------- //
 
     // --------------------------------- Begin Table User ----------------------------------- //
     addUser(info) {
@@ -143,78 +83,6 @@ app.get('/', (req, res) => {
         result: 'Hello World',
     });
 });
-
-// --------------------------------- Begin API Movie ----------------------------------- //
-
-// Adding new movie
-app.post('/api/movie', (req, res) => {
-    const info = req.body;
-    const movie = database.addMovie(info);
-
-    res.status(201).json({
-        status: 201,
-        result: movie,
-    });
-});
-
-// Get all movies
-app.get('/api/movie', (req, res) => {
-    res.status(200).json({
-        status: 200,
-        result: database.getAllMovies(),
-    });
-});
-
-// Get movie with id
-app.get('/api/movie/:movieId', (req, res) => {
-    const movieId = req.params.movieId;
-    const movie = database.getMovieFromId(movieId);
-
-    if (movie == null) {
-        res.status(401).json({
-            status: 401,
-            result: `Movie with ID ${movieId} not found`,
-        });
-
-        return;
-    }
-
-    res.status(200).json({
-        status: 200,
-        result: movie,
-    });
-});
-
-// Deleting all movies
-app.delete('/api/movie', (req, res) => {
-    database.deleteAllMovies();
-
-    res.status(200).json({
-        status: 200,
-        result: `All movies have been deleted`,
-    });
-});
-
-// Deleting a movie with id
-app.delete('/api/movie/:movieId', (req, res) => {
-    const movieId = req.params.movieId;
-    const movie = database.deleteMovieFromId(movieId);
-
-    if (movie == null) {
-        res.status(401).json({
-            status: 401,
-            result: `Movie with ID ${movieId} not found`,
-        });
-        return;
-    }
-
-    res.status(200).json({
-        status: 200,
-        result: `Movie with ID ${movieId} has been deleted`,
-    });
-});
-
-// --------------------------------- End API Movie ----------------------------------- //
 
 // --------------------------------- Begin API User ----------------------------------- //
 
