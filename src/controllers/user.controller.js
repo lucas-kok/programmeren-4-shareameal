@@ -8,6 +8,11 @@ class Database {
     constructor() {}
 
     // --------------------------------- Begin Table User ----------------------------------- //
+    containsUserName(name) {
+        console.log(name);
+        return this.getUserFromName(name) != null;
+    }
+
     addUser(info) {
         const id = this.userId;
         const user = {
@@ -30,6 +35,15 @@ class Database {
     getUserFromId(id) {
         console.log(`Searching user with Id ${id}`);
         const user = this.users.filter((item) => item.id == id);
+
+        console.log(`Search results: ${user}`);
+
+        return user.length == 0 ? null : user[0];
+    }
+
+    getUserFromName(name) {
+        console.log(`Searching user with Name ${name}`);
+        const user = this.users.filter((item) => item.name == name);
 
         console.log(`Search results: ${user}`);
 
@@ -65,11 +79,13 @@ const database = new Database();
 let controller = {
     validateMovie: (req, res, next) => {
         let movie = req.body;
-        let { name, email } = movie;
+        let { name, email, password } = movie;
 
         try {
-            assert(typeof name === 'string', 'Title must be a string');
-            assert(typeof email === 'string', 'Year must be a number');
+            assert(typeof name === 'string', 'Username must be a string');
+            assert(!database.containsUserName(name), 'Username already exists');
+            assert(typeof email === 'string', 'Email must be a string');
+            assert(typeof password === 'string', 'Password must be a string');
             next();
         } catch (error) {
             const selectiveErrorInformation = {
