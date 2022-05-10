@@ -72,12 +72,12 @@ let controller = {
             assert(typeof email === 'string', 'Year must be a number');
             next();
         } catch (error) {
-            res.status(400).json({
+            const selectiveErrorInformation = {
                 status: 400,
-                result: error.toString(),
-            });
+                result: error.message,
+            };
 
-            next(error);
+            next(selectiveErrorInformation);
         }
     },
 
@@ -98,15 +98,17 @@ let controller = {
         });
     },
 
-    getUserWithId: (req, res) => {
+    getUserWithId: (req, res, next) => {
         const userId = req.params.userId;
         const user = database.getUserFromId(userId);
 
         if (user == null) {
-            res.status(401).json({
-                status: 401,
+            const selectiveErrorInformation = {
+                status: 404,
                 result: `User with ID ${userId} not found`,
-            });
+            };
+
+            next(selectiveErrorInformation);
 
             return;
         }

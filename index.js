@@ -24,7 +24,9 @@ app.all('*', (req, res) => {
     });
 });
 
+// Error handler
 app.use((err, req, res, next) => {
+    console.log(err.status);
     res.status(err.status).json(err);
 });
 
