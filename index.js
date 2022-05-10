@@ -14,7 +14,8 @@ app.all('*', (req, res, next) => {
     next();
 });
 
-app.use(router);
+// Makes sure that the router will only recieve /api requests
+app.use('/api', router);
 
 // No valid request found
 app.all('*', (req, res) => {
