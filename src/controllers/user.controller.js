@@ -47,7 +47,7 @@ const controller = {
             next();
         } catch (error) {
             const selectiveErrorInformation = {
-                status: 400,
+                status: 401,
                 result: error.message,
             };
 
@@ -82,8 +82,8 @@ const controller = {
                     // Don't use the connection here, it has been returned to the pool.
                     // Handle error after the release.
                     if (error) {
-                        return res.status(409).json({
-                            status: 409,
+                        return res.status(401).json({
+                            status: 401,
                             result: `User could not be added, emailAdress is already taken`,
                         });
                     }

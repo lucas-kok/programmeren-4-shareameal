@@ -58,7 +58,7 @@ describe('Manage users', () => {
 
                     const { status, result } = res.body;
 
-                    status.should.equals(400);
+                    status.should.equals(401);
                     result.should.be
                         .a('string')
                         .that.equals('First name must be a string');
@@ -84,7 +84,7 @@ describe('Manage users', () => {
 
                     const { status, result } = res.body;
 
-                    status.should.equals(400);
+                    status.should.equals(401);
                     result.should.be
                         .a('string')
                         .that.equals('The emailAdress is not valid');
@@ -110,7 +110,7 @@ describe('Manage users', () => {
 
                     const { status, result } = res.body;
 
-                    status.should.equals(400);
+                    status.should.equals(401);
                     result.should.be
                         .a('string')
                         .that.equals(
@@ -139,7 +139,7 @@ describe('Manage users', () => {
                     const { status, result } = res.body;
                     console.log(res.body.statusCode);
 
-                    status.should.equals(409);
+                    status.should.equals(401);
                     result.should.be
                         .a('string')
                         .that.equals(
@@ -420,7 +420,7 @@ describe('Manage users', () => {
 
                     const { status, result } = res.body;
 
-                    status.should.equals(400);
+                    status.should.equals(401);
                     result.should.equals('Email must be a string');
 
                     done();
@@ -446,7 +446,7 @@ describe('Manage users', () => {
 
                     const { status, result } = res.body;
 
-                    status.should.equals(400);
+                    status.should.equals(401);
                     result.should.equals('Phone number must be a string');
 
                     done();
