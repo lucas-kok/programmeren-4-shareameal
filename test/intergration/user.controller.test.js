@@ -1,9 +1,9 @@
+process.env.DB_DATABASE = process.env.DB_DATABASE || 'share-a-meal-testdb';
 const chai = require('chai');
 const assert = chai;
 const chaiHttp = require('chai-http');
 const server = require('../../index');
 
-process.env.DB_DATABASE = process.env.DB_DATABASE || 'share-a-meal-testdb';
 const dbconnection = require('../../database/dbconnection');
 const { expect } = require('chai');
 
