@@ -74,6 +74,7 @@ const controller = {
 			// Use the connection
 			connection.query(
 				`INSERT INTO user (firstName, lastName, emailAdress, password, phoneNumber, street, city) VALUES ('${firstName}', '${lastName}', '${emailAdress}', '${password}', '${phoneNumber}', '${street}', '${city}');`,
+
 				function (error, results, fields) {
 					// When done with the connection, release it.
 					connection.release();
@@ -82,13 +83,13 @@ const controller = {
 					// Handle error after the release.
 					if (error) {
 						return res.status(409).json({
-							statusCode: 409,
+							status: 409,
 							result: `User could not be added, emailAdress is already taken`,
 						});
 					}
 
 					res.status(200).json({
-						statusCode: 200,
+						status: 200,
 						result: user,
 					});
 				}
@@ -114,7 +115,7 @@ const controller = {
 
 					// Don't use the connection here, it has been returned to the pool.
 					res.status(200).json({
-						statusCode: 200,
+						status: 200,
 						result: results,
 					});
 				}
@@ -126,7 +127,7 @@ const controller = {
 	// Not implemented yet because there is no usage of login-tokens
 	getPersonalUser: (req, res) => {
 		res.status(401).json({
-			statusCode: 401,
+			status: 401,
 			result: `Function not implemented yet`,
 		});
 	},
@@ -150,13 +151,13 @@ const controller = {
 					// Don't use the connection here, it has been returned to the pool.
 					if (results.length <= 0) {
 						return res.status(404).json({
-							statusCode: 404,
+							status: 404,
 							error,
 						});
 					}
 
 					res.status(200).json({
-						statusCode: 200,
+						status: 200,
 						result: results,
 					});
 				}
@@ -193,7 +194,7 @@ const controller = {
 					// Handle error after the release.
 					if (error) {
 						return res.status(401).json({
-							statusCode: 401,
+							status: 401,
 							result: `User could not be added, emailAdress is already taken`,
 						});
 					}
@@ -201,13 +202,13 @@ const controller = {
 					// If there are no  affected rows, then no record is found
 					if (results.affectedRows == 0) {
 						return res.status(400).json({
-							statusCode: 400,
+							status: 400,
 							result: `User with id ${userId} not found`,
 						});
 					}
 
 					res.status(200).json({
-						statusCode: 200,
+						status: 200,
 						result: user,
 					});
 				}
@@ -236,13 +237,13 @@ const controller = {
 
 					if (results.affectedRows == 0) {
 						return res.status(400).json({
-							statusCode: 400,
+							status: 400,
 							result: `User with id ${userId} not found`,
 						});
 					}
 
 					res.status(200).json({
-						statusCode: 200,
+						status: 200,
 						result: `User with id ${userId} has been deleted`,
 						results,
 					});
