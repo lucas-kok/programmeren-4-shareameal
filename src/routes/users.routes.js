@@ -5,28 +5,35 @@ const userController = require('../controllers/user.controller');
 
 // Test request
 router.get('/', (req, res) => {
-    res.status(200).json({
-        status: 200,
-        result: 'Hello World',
-    });
+	res.status(200).json({
+		status: 200,
+		result: 'Hello World',
+	});
 });
 
 // --------------------------------- Begin API User ----------------------------------- //
 
-// Adding a new user
-router.post('/api/user', userController.validateMovie, userController.addUser);
+// UC-201: Register a new user
+router.post('/user', userController.validateUser, userController.addUser);
 
-// Get all users
-router.get('/api/user', userController.getAllUsers);
+// UC-202: Get all users
+router.get('/user', userController.getAllUsers);
 
-// Get user with id
-router.get('/api/user/:userId', userController.getUserWithId);
+// UC-203: Request personal user profile
+router.get('/user/profile/:token', userController.getPersonalUser);
 
-// Deleting all users
-router.delete('/api/user', userController.deleteAllUsers);
+// UC-204: Get single user by ID
+router.get('/user/:userId', userController.getUserWithId);
 
-// Deleting a user with id
-router.delete('/api/user/:userId', userController.deleteUserWithId);
+// UC-205: Update a single user
+router.post(
+	'/user/:userId',
+	userController.validateUser,
+	userController.updateUser
+);
+
+// UC-206: Delete a user
+router.delete('/user/:userId', userController.deleteUserWithId);
 
 // --------------------------------- End API User ----------------------------------- //
 

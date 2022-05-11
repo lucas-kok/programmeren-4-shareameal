@@ -1,166 +1,255 @@
-class Database {
-    movieId = 1;
-    userId = 1;
-
-    movies = [];
-    users = [];
-
-    constructor() {}
-
-    // --------------------------------- Begin Table User ----------------------------------- //
-    containsUserName(name) {
-        console.log(name);
-        return this.getUserFromName(name) != null;
-    }
-
-    addUser(info) {
-        const id = this.userId;
-        const user = {
-            id,
-            ...info,
-        };
-
-        this.users.push(user);
-        console.log(user);
-
-        this.userId++;
-
-        return user;
-    }
-
-    getAllUsers() {
-        return this.users;
-    }
-
-    getUserFromId(id) {
-        console.log(`Searching user with Id ${id}`);
-        const user = this.users.filter((item) => item.id == id);
-
-        console.log(`Search results: ${user}`);
-
-        return user.length == 0 ? null : user[0];
-    }
-
-    getUserFromName(name) {
-        console.log(`Searching user with Name ${name}`);
-        const user = this.users.filter((item) => item.name == name);
-
-        console.log(`Search results: ${user}`);
-
-        return user.length == 0 ? null : user[0];
-    }
-
-    deleteAllUsers() {
-        this.users = [];
-
-        console.log(`Table users emptied`);
-    }
-
-    deleteUserFromId(id) {
-        const user = this.getUserFromId(id);
-        console.log(`Deleting: ${user}`);
-
-        if (user != null) {
-            const index = this.users.indexOf(user);
-
-            if (index < 0) return;
-
-            this.users.splice(index, 1);
-        }
-
-        return user;
-    }
-
-    // --------------------------------- End Table User ----------------------------------- //
-}
-
 const assert = require('assert');
-const database = new Database();
-let controller = {
-    validateMovie: (req, res, next) => {
-        let movie = req.body;
-        let { name, email, password } = movie;
+const dbconnection = require('../../database/dbconnection');
+const controller = {
+	validateUser: (req, res, next) => {
+		console.log(req.params.userId);
+		const user = req.body;
+		const {
+			firstName,
+			lastName,
+			emailAdress,
+			password,
+			phoneNumber,
+			street,
+			city,
+		} = user;
 
-        try {
-            assert(typeof name === 'string', 'Username must be a string');
-            assert(!database.containsUserName(name), 'Username already exists');
-            assert(typeof email === 'string', 'Email must be a string');
-            assert(typeof password === 'string', 'Password must be a string');
-            next();
-        } catch (error) {
-            const selectiveErrorInformation = {
-                status: 400,
-                result: error.message,
-            };
+		try {
+			assert(
+				typeof firstName === 'string',
+				'First name must be a string'
+			);
+			assert(typeof lastName === 'string', 'Last name must be a string');
+			assert(typeof emailAdress === 'string', 'Email must be a string');
+			assert(typeof password === 'string', 'Password must be a string');
+			assert(
+				typeof phoneNumber === 'string',
+				'Phone number must be a string'
+			);
+			assert(typeof street === 'string', 'Street must be a string');
+			assert(typeof city === 'string', 'City must be a string');
 
-            next(selectiveErrorInformation);
-        }
-    },
+			// Validating after making sure the email and password are strings
+			// EmailAdress must be valid (found this regex online, not aware of all details)
+			assert.match(
+				emailAdress,
+				/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+				'The emailAdress is not valid'
+			);
 
-    addUser: (req, res) => {
-        const info = req.body;
-        const user = database.addUser(info);
+			// Password contains 8-15 characters which contains at least one lower- and uppercase letter, one special character and one digit
+			assert.match(
+				password,
+				/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/,
+				'Password must contain 8-15 characters which contains at least one lower- and uppercase letter, one special character and one digit'
+			);
 
-        res.status(200).json({
-            status: 200,
-            result: user,
-        });
-    },
+			next();
+		} catch (error) {
+			const selectiveErrorInformation = {
+				status: 400,
+				result: error.message,
+			};
 
-    getAllUsers: (req, res) => {
-        res.status(200).json({
-            status: 200,
-            result: database.getAllUsers(),
-        });
-    },
+			next(selectiveErrorInformation);
+		}
+	},
 
-    getUserWithId: (req, res, next) => {
-        const userId = req.params.userId;
-        const user = database.getUserFromId(userId);
+	// UC-201: Register a new user
+	addUser: (req, res) => {
+		const user = req.body;
+		const {
+			firstName,
+			lastName,
+			emailAdress,
+			password,
+			phoneNumber,
+			street,
+			city,
+		} = user;
 
-        if (user == null) {
-            const selectiveErrorInformation = {
-                status: 404,
-                result: `User with ID ${userId} not found`,
-            };
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err; // Not connected!
 
-            next(selectiveErrorInformation);
+			// Use the connection
+			connection.query(
+				`INSERT INTO user (firstName, lastName, emailAdress, password, phoneNumber, street, city) VALUES ('${firstName}', '${lastName}', '${emailAdress}', '${password}', '${phoneNumber}', '${street}', '${city}');`,
+				function (error, results, fields) {
+					// When done with the connection, release it.
+					connection.release();
 
-            return;
-        }
+					// Don't use the connection here, it has been returned to the pool.
+					// Handle error after the release.
+					if (error) {
+						return res.status(409).json({
+							statusCode: 409,
+							result: `User could not be added, emailAdress is already taken`,
+						});
+					}
 
-        res.status(200).json({
-            status: 200,
-            result: user,
-        });
-    },
+					res.status(200).json({
+						statusCode: 200,
+						result: user,
+					});
+				}
+			);
+		});
+	},
 
-    deleteAllUsers: (req, res) => {
-        database.deleteAllUsers();
+	// UC-202: Get all users
+	// Does not implements the use of a login-token yet
+	getAllUsers: (req, res) => {
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err; // Not connected!
 
-        res.status(200).json({
-            status: 200,
-            result: `All users have been deleted`,
-        });
-    },
+			// Use the connection
+			connection.query(
+				'SELECT * FROM user;',
+				function (error, results, fields) {
+					// When done with the connection, release it.
+					connection.release();
 
-    deleteUserWithId: (req, res) => {
-        const userId = req.params.userId;
-        const user = database.deleteUserFromId(userId);
+					// Handle error after the release.
+					if (error) throw error;
 
-        if (user == null) {
-            res.status(401).json({
-                status: 401,
-                result: `User with ID ${userId} not found`,
-            });
-            return;
-        }
+					// Don't use the connection here, it has been returned to the pool.
+					res.status(200).json({
+						statusCode: 200,
+						result: results,
+					});
+				}
+			);
+		});
+	},
 
-        res.status(200).json({
-            status: 200,
-            result: `User with ID ${userId} has been deleted`,
-        });
-    },
+	// UC-203: Request personal user profile
+	// Not implemented yet because there is no usage of login-tokens
+	getPersonalUser: (req, res) => {
+		res.status(401).json({
+			statusCode: 401,
+			result: `Function not implemented yet`,
+		});
+	},
+
+	// UC-204: Get single user by ID
+	getUserWithId: (req, res) => {
+		const userId = req.params.userId;
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err; // Not connected!
+
+			// Use the connection
+			connection.query(
+				`SELECT * FROM user where id = ${userId};`,
+				function (error, results, fields) {
+					// When done with the connection, release it.
+					connection.release();
+
+					// Handle error after the release.
+					if (error) throw error;
+
+					// Don't use the connection here, it has been returned to the pool.
+					if (results.length <= 0) {
+						return res.status(404).json({
+							statusCode: 404,
+							error,
+						});
+					}
+
+					res.status(200).json({
+						statusCode: 200,
+						result: results,
+					});
+				}
+			);
+		});
+	},
+
+	// UC-205: Update a single user
+	updateUser: (req, res) => {
+		console.log('Executing query');
+		const userId = req.params.userId;
+		const user = req.body;
+		const {
+			firstName,
+			lastName,
+			emailAdress,
+			password,
+			phoneNumber,
+			street,
+			city,
+		} = user;
+
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err; // Not connected!
+
+			// Use the connection
+			connection.query(
+				`UPDATE user SET firstName = '${firstName}', lastName = '${lastName}', emailAdress = '${emailAdress}', password = '${password}', phoneNumber = '${phoneNumber}', street = '${street}', city = '${city}' WHERE id = '${userId}';`,
+				function (error, results, fields) {
+					// When done with the connection, release it.
+					connection.release();
+
+					// Don't use the connection here, it has been returned to the pool.
+					// Handle error after the release.
+					if (error) {
+						return res.status(401).json({
+							statusCode: 401,
+							result: `User could not be added, emailAdress is already taken`,
+						});
+					}
+
+					// If there are no  affected rows, then no record is found
+					if (results.affectedRows == 0) {
+						return res.status(400).json({
+							statusCode: 400,
+							result: `User with id ${userId} not found`,
+						});
+					}
+
+					res.status(200).json({
+						statusCode: 200,
+						result: user,
+					});
+				}
+			);
+		});
+	},
+
+	// UC-206: Delete a user
+	// No usage of login-tokens and ownership yet
+	deleteUserWithId: (req, res) => {
+		const userId = req.params.userId;
+
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err; // Not connected!
+
+			// Use the connection
+			connection.query(
+				`DELETE FROM user WHERE id = ${userId}`,
+				function (error, results, fields) {
+					// When done with the connection, release it.
+					connection.release();
+
+					// Don't use the connection here, it has been returned to the pool.
+					// Handle error after the release.
+					if (error) throw error;
+
+					if (results.affectedRows == 0) {
+						return res.status(400).json({
+							statusCode: 400,
+							result: `User with id ${userId} not found`,
+						});
+					}
+
+					res.status(200).json({
+						statusCode: 200,
+						result: `User with id ${userId} has been deleted`,
+						results,
+					});
+				}
+			);
+		});
+	},
 };
 
 module.exports = controller;
