@@ -3,9 +3,10 @@ require('dotenv').config();
 const express = require('express'),
     app = express(),
     port = process.env.PORT,
-    router = require('./src/routes/users.routes');
+    userRoutes = require('./src/routes/users.routes'),
+    authRoutes = require('./src/routes/auth.routes'),
+    bodyParser = require('body-parser');
 
-const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.all('*', (req, res, next) => {
@@ -17,7 +18,8 @@ app.all('*', (req, res, next) => {
 });
 
 // Makes sure that the router will only recieve /api requests
-app.use('/api', router);
+app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 
 // No valid request found
 app.all('*', (req, res) => {
