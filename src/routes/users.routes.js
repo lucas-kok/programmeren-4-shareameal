@@ -1,10 +1,9 @@
-const express = require('express');
-const app = express();
-const router = express.Router();
+const routes = require('express').Router();
 const userController = require('../controllers/user.controller');
+const authController = require('../controllers/authentication.controller');
 
 // Test request
-router.get('/', (req, res) => {
+routes.get('/', (req, res) => {
 	res.status(200).json({
 		status: 200,
 		result: 'Hello World',
@@ -14,27 +13,40 @@ router.get('/', (req, res) => {
 // --------------------------------- Begin API User ----------------------------------- //
 
 // UC-201: Register a new user
-router.post('/user', userController.validateUser, userController.addUser);
+routes.post('/user', userController.validateUser, userController.addUser);
 
 // UC-202: Get all users
-router.get('/user', userController.getAllUsers);
+routes.get('/user', authController.validateToken, userController.getAllUsers);
 
 // UC-203: Request personal user profile
-router.get('/user/profile/:token', userController.getPersonalUser);
+routes.get(
+	'/user/profile/:token',
+	authController.validateToken,
+	userController.getPersonalUser
+);
 
 // UC-204: Get single user by ID
-router.get('/user/:userId', userController.getUserWithId);
+routes.get(
+	'/user/:userId',
+	authController.validateToken,
+	userController.getUserWithId
+);
 
 // UC-205: Update a single user
-router.post(
+routes.post(
 	'/user/:userId',
+	authController.validateToken,
 	userController.validateUser,
 	userController.updateUser
 );
 
 // UC-206: Delete a user
-router.delete('/user/:userId', userController.deleteUserWithId);
+routes.delete(
+	'/user/:userId',
+	authController.validateToken,
+	userController.deleteUserWithId
+);
 
 // --------------------------------- End API User ----------------------------------- //
 
-module.exports = router;
+module.exports = routes;
