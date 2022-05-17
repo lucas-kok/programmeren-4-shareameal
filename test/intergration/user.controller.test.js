@@ -137,6 +137,7 @@ describe('Manage users', () => {
                     res.should.be.an('object');
 
                     const { status, result } = res.body;
+                    console.log(res.body.statusCode);
 
                     status.should.equals(409);
                     result.should.be
@@ -498,6 +499,7 @@ describe('Manage users', () => {
                     res.should.be.an('object');
 
                     const { status, result } = res.body;
+                    console.log(result);
 
                     status.should.equals(200);
                     expect(result).to.deep.equal(updatedUser);
