@@ -392,6 +392,15 @@ const controller = {
 		const mealId = req.params.id;
 		const userId = req.userId;
 
+		if (isNaN(mealId)) {
+			logger.warn('Id must be a number');
+
+			return res.status(401).json({
+				status: 401,
+				result: 'Id must be a number',
+			});
+		}
+
 		let meal;
 		let currentAmountOfParticipants = 0;
 
