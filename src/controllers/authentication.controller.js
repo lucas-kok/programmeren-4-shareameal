@@ -104,7 +104,7 @@ const controller = {
 
 			// Use the connection
 			connection.query(
-				`SELECT id, emailAdress, password, isActive, firstName, lastName FROM user WHERE emailAdress = '${emailAdress}';`,
+				`SELECT * FROM user WHERE emailAdress = '${emailAdress}';`,
 				function (error, results, fields) {
 					// When done with the connection, release it.
 					connection.release();
