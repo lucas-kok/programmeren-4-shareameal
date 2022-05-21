@@ -24,7 +24,7 @@ const CLEAR_DB =
 
 const INSERT_USERS =
 	'INSERT INTO user (id, firstName, lastName, isActive, emailAdress, password, phoneNumber, street, city) VALUES' +
-	"(1, 'Lucas', 'Kok', 1, 'lucas.kok@hotmail.nl', 'JonkerFr02_', '0640052439', 'Jonker Fransstraat', 'Rotterdam')," +
+	"(1, 'Lucas', 'Kok', 1, 'lucas.kok@hotmail.nl', 'JonkerFr02', '0640052439', 'Jonker Fransstraat', 'Rotterdam')," +
 	"(2, 'Sander', 'Hart', 1, 'sanderhart30@gmail.com', 'Jackie_ds2!', '0652243698', 'Bernhardstraat', 'Burgh-Haamstede');";
 
 const INSERT_MEALS =
@@ -65,7 +65,7 @@ describe('Manage users', () => {
 					lastName: 'Kok',
 					isActive: true,
 					emailAdress: 'lucas.kok@hotmail.nl',
-					password: 'MyPet54_',
+					password: 'MyPet540',
 					phoneNumber: '0640052439',
 					street: 'Perenmeet',
 					city: 'Burgh-Haamstede',
@@ -92,7 +92,7 @@ describe('Manage users', () => {
 					lastName: 'Kok',
 					isActive: true,
 					emailAdress: 'lucas.dekra.com',
-					password: 'MyPet54_',
+					password: 'MyPet540',
 					phoneNumber: '0640052439',
 					street: 'Perenmeet',
 					city: 'Burgh-Haamstede',
@@ -133,7 +133,7 @@ describe('Manage users', () => {
 					message.should.be
 						.a('string')
 						.that.equals(
-							'Password must contain 8-15 characters which contains at least one lower- and uppercase letter, one special character and one digit'
+							'This password is not valid, please use at least 8 characters, one digit, one lower case and one upper case.'
 						);
 
 					done();
@@ -148,16 +148,15 @@ describe('Manage users', () => {
 					lastName: 'Kok',
 					isActive: true,
 					emailAdress: 'lucas.kok@hotmail.nl',
-					password: 'MyPet54_',
+					password: 'MyPet540',
 					phoneNumber: '0640052439',
 					street: 'Perenmeet',
 					city: 'Burgh-Haamstede',
 				})
 				.end((err, res) => {
 					res.should.be.an('object');
-
+					console.log(res.body);
 					const { status, message } = res.body;
-					console.log(res.body.statusCode);
 
 					status.should.equals(409);
 					message.should.be
@@ -176,7 +175,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				emailAdress: 'lucas.kok@homtail.nl',
-				password: 'MyPet54_',
+				password: 'MyPet540',
 				phoneNumber: '0640052439',
 				street: 'Perenmeet',
 				city: 'Burgh-Haamstede',
@@ -197,7 +196,7 @@ describe('Manage users', () => {
 						lastName: 'Kok',
 						isActive: 1,
 						emailAdress: 'lucas.kok@homtail.nl',
-						password: 'MyPet54_',
+						password: 'MyPet540',
 						phoneNumber: '0640052439',
 						street: 'Perenmeet',
 						city: 'Burgh-Haamstede',
@@ -217,7 +216,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: 1,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				roles: 'editor,guest',
 				street: 'Jonker Fransstraat',
@@ -418,7 +417,7 @@ describe('Manage users', () => {
 						lastName: 'Kok',
 						isActive: 1,
 						emailAdress: 'lucas.kok@hotmail.nl',
-						password: 'JonkerFr02_',
+						password: 'JonkerFr02',
 						phoneNumber: '0640052439',
 						roles: 'editor,guest',
 						street: 'Jonker Fransstraat',
@@ -549,7 +548,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: 1,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				roles: 'editor,guest',
 				street: 'Jonker Fransstraat',
@@ -601,7 +600,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				// EmailAdress is missing
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				street: 'Jonker Fransstraat',
 				city: 'Rotterdam',
@@ -634,7 +633,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: 640052439,
 				street: 'Jonker Fransstraat',
 				city: 'Rotterdam',
@@ -667,7 +666,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				street: 'Jonker Fransstraat',
 				city: 'Rotterdam',
@@ -702,7 +701,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				street: 'Jonker Fransstraat',
 				city: 'Rotterdam',
@@ -731,7 +730,7 @@ describe('Manage users', () => {
 				lastName: 'Kok',
 				isActive: true,
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 				phoneNumber: '0640052439',
 				street: 'Jonker Fransstraat',
 				city: 'Rotterdam',
