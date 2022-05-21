@@ -257,7 +257,7 @@ describe('Manage users', () => {
 
 		it('TC-202-1: When there are no users in the database, an empty array should be returned', (done) => {
 			chai.request(server)
-				.get('/api/user?name=notexisting')
+				.get('/api/user?firstName=notexisting')
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
@@ -354,7 +354,7 @@ describe('Manage users', () => {
 
 		it('TC-202-6: When searching on a name, a array with users containing matching names should be returned', (done) => {
 			chai.request(server)
-				.get('/api/user?name=lucas')
+				.get('/api/user?firstName=lucas')
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),

@@ -152,7 +152,7 @@ const controller = {
 			queryString += ' WHERE ';
 
 			if (firstName) {
-				queryString += `firstName LIKE '%${firstName}%'`;
+				queryString += `firstName = '${firstName}'`;
 
 				if (isActive) {
 					queryString += ' AND ';
