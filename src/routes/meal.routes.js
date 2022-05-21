@@ -12,7 +12,7 @@ routes.post(
 
 // UC-302: Update a meal
 routes.post(
-	'/meal/:mealId',
+	'/meal/:id',
 	authController.validateToken,
 	mealController.validateMeal,
 	mealController.updateMeal
@@ -22,18 +22,18 @@ routes.post(
 routes.get('/meal', mealController.getAllMeals);
 
 // UC-304: Request details of meal
-routes.get('/meal/:mealId', mealController.getMeal);
+routes.get('/meal/:id', mealController.getMeal);
 
 // UC-305: Delete meal
 routes.delete(
-	'/meal/:mealId',
+	'/meal/:id',
 	authController.validateToken,
 	mealController.deleteMeal
 );
 
 // UC-401 & UC-402: Participating and Siging off for a meal
 routes.get(
-	'/meal/:mealId/participate',
+	'/meal/:id/participate',
 	authController.validateToken,
 	mealController.manageParticipation
 );

@@ -138,7 +138,7 @@ const controller = {
 
 	// UC-302: Update a meal
 	updateMeal: (req, res) => {
-		const mealId = req.params.mealId;
+		const mealId = req.params.id;
 		const userIdFromRequest = req.userId;
 		const updatedMeal = req.body;
 		const {
@@ -259,7 +259,7 @@ const controller = {
 
 	// UC-304: Request details of meal
 	getMeal: (req, res) => {
-		const mealId = req.params.mealId;
+		const mealId = req.params.id;
 
 		logger.debug(`GetMeal called with Id: ${mealId}`);
 
@@ -299,7 +299,7 @@ const controller = {
 
 	// UC-305: Delete meal
 	deleteMeal: (req, res) => {
-		const mealId = req.params.mealId;
+		const mealId = req.params.id;
 		const userId = req.userId;
 
 		logger.debug(`DeleteMeal called with Id: ${mealId}`);
@@ -361,7 +361,7 @@ const controller = {
 
 	// UC-401 & UC-402: Participate and Sign off for a meal
 	manageParticipation: (req, res) => {
-		const mealId = req.params.mealId;
+		const mealId = req.params.id;
 		const userId = req.userId;
 
 		let meal;
