@@ -567,7 +567,7 @@ describe('Manage meals', () => {
 
 		it('TC-305-2: When a user is not signed in, a valid error message should be returned', (done) => {
 			chai.request(server)
-				.get(`/api/meal/${invalidMealId}`)
+				.delete(`/api/meal/${invalidMealId}`)
 				.end((err, res) => {
 					res.should.be.an('object');
 

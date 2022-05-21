@@ -342,7 +342,7 @@ const controller = {
 					// Don't use the connection here, it has been returned to the pool.
 					// Returning when no records are found
 					if (results.affectedRows == 0) {
-						logger.debug(`User with Id: ${userId} not found`);
+						logger.debug(`User with Id ${userId} not found`);
 
 						return res.status(400).json({
 							status: 400,
@@ -350,7 +350,7 @@ const controller = {
 						});
 					}
 
-					logger.debug(`User with Id: ${userId} sucesfully updated`);
+					logger.debug(`User with id ${userId} sucesfully updated`);
 
 					res.status(200).json({
 						status: 200,
