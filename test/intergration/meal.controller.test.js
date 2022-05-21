@@ -84,6 +84,8 @@ describe('Manage meals', () => {
 
 					const { status, message } = res.body;
 
+					console.log(res.body);
+
 					status.should.equals(400);
 					message.should.be
 						.a('string')
