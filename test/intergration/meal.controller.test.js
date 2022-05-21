@@ -70,10 +70,10 @@ describe('Manage meals', () => {
 					// name is missing
 					description:
 						'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-					isActive: 1,
-					isVega: 0,
-					isVegan: 1,
-					isToTakeHome: 1,
+					isActive: true,
+					isVega: false,
+					isVegan: true,
+					isToTakeHome: true,
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -102,10 +102,10 @@ describe('Manage meals', () => {
 					name: 'Broodje krokante kip',
 					description:
 						'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-					isActive: 1,
-					isVega: 0,
-					isVegan: 1,
-					isToTakeHome: 1,
+					isActive: true,
+					isVega: false,
+					isVegan: true,
+					isToTakeHome: true,
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -132,10 +132,10 @@ describe('Manage meals', () => {
 				name: 'Broodje krokante kip',
 				description:
 					'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-				isActive: 1,
-				isVega: 0,
-				isVegan: 1,
-				isToTakeHome: 1,
+				isActive: true,
+				isVega: false,
+				isVegan: true,
+				isToTakeHome: true,
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -163,10 +163,10 @@ describe('Manage meals', () => {
 						name: 'Broodje krokante kip',
 						description:
 							'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-						isActive: 1,
-						isVega: 0,
-						isVegan: 1,
-						isToTakeHome: 1,
+						isActive: true,
+						isVega: false,
+						isVegan: true,
+						isToTakeHome: true,
 						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -213,10 +213,10 @@ describe('Manage meals', () => {
 					// name is missing
 					description:
 						'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-					isActive: 1,
-					isVega: 0,
-					isVegan: 1,
-					isToTakeHome: 1,
+					isActive: true,
+					isVega: false,
+					isVegan: true,
+					isToTakeHome: true,
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -245,10 +245,10 @@ describe('Manage meals', () => {
 					name: 'Broodje krokante kip',
 					description:
 						'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-					isActive: 1,
-					isVega: 0,
-					isVegan: 1,
-					isToTakeHome: 1,
+					isActive: true,
+					isVega: false,
+					isVegan: true,
+					isToTakeHome: true,
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -281,10 +281,10 @@ describe('Manage meals', () => {
 					name: 'Broodje krokante kip',
 					description:
 						'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-					isActive: 1,
-					isVega: 0,
-					isVegan: 1,
-					isToTakeHome: 1,
+					isActive: true,
+					isVega: false,
+					isVegan: true,
+					isToTakeHome: true,
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -313,10 +313,10 @@ describe('Manage meals', () => {
 				name: 'Broodje krokante kip',
 				description:
 					'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-				isActive: 1,
-				isVega: 0,
-				isVegan: 1,
-				isToTakeHome: 1,
+				isActive: true,
+				isVega: false,
+				isVegan: true,
+				isToTakeHome: true,
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -353,10 +353,10 @@ describe('Manage meals', () => {
 				name: 'Broodje krokante kip',
 				description:
 					'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-				isActive: 1,
-				isVega: 0,
-				isVegan: 1,
-				isToTakeHome: 1,
+				isActive: true,
+				isVega: false,
+				isVegan: true,
+				isToTakeHome: true,
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -377,6 +377,8 @@ describe('Manage meals', () => {
 
 					const { status, result } = res.body;
 
+					console.log(err);
+
 					status.should.equals(200);
 					expect(result).to.deep.equal({
 						id: result.id,
@@ -384,10 +386,10 @@ describe('Manage meals', () => {
 						name: 'Broodje krokante kip',
 						description:
 							'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
-						isActive: 1,
-						isVega: 0,
-						isVegan: 1,
-						isToTakeHome: 1,
+						isActive: true,
+						isVega: false,
+						isVegan: true,
+						isToTakeHome: true,
 						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
@@ -435,10 +437,10 @@ describe('Manage meals', () => {
 					expect(result).to.deep.equal([
 						{
 							id: 1,
-							isActive: 0,
-							isVega: 0,
-							isVegan: 0,
-							isToTakeHome: 1,
+							isActive: false,
+							isVega: false,
+							isVegan: false,
+							isToTakeHome: true,
 							dateTime: result[0].dateTime,
 							maxAmountOfParticipants: 5,
 							price: '6.50',
@@ -452,10 +454,10 @@ describe('Manage meals', () => {
 						},
 						{
 							id: 2,
-							isActive: 0,
-							isVega: 0,
-							isVegan: 0,
-							isToTakeHome: 1,
+							isActive: false,
+							isVega: false,
+							isVegan: false,
+							isToTakeHome: true,
 							dateTime: result[1].dateTime,
 							maxAmountOfParticipants: 5,
 							price: '6.50',
@@ -524,10 +526,10 @@ describe('Manage meals', () => {
 					status.should.equals(200);
 					expect(result).to.deep.equal({
 						id: 1,
-						isActive: 0,
-						isVega: 0,
-						isVegan: 0,
-						isToTakeHome: 1,
+						isActive: false,
+						isVega: false,
+						isVegan: false,
+						isToTakeHome: true,
 						dateTime: result.dateTime,
 						maxAmountOfParticipants: 5,
 						price: '6.50',

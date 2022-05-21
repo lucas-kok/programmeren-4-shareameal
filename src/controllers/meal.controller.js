@@ -19,19 +19,19 @@ const controller = {
 		} = meal;
 
 		try {
-			assert(typeof isActive === 'number', 'IsActive must be a number');
-			assert(typeof isVega === 'number', 'IsVega must be a number');
-			assert(typeof isVegan === 'number', 'IsVegan must be a number');
+			assert(typeof isActive === 'boolean', 'IsActive must be a boolean');
+			assert(typeof isVega === 'boolean', 'IsVega must be a boolean');
+			assert(typeof isVegan === 'boolean', 'IsVegan must be a boolean');
 			assert(
-				typeof isToTakeHome === 'number',
-				'IsToTakeHome must be a number'
+				typeof isToTakeHome === 'boolean',
+				'IsToTakeHome must be a boolean'
 			);
-			assert(typeof dateTime === 'string', 'DateTime must be a number');
+			assert(typeof dateTime === 'string', 'DateTime must be a string');
 			assert(
 				typeof maxAmountOfParticipants === 'number',
 				'MaxAmountOfParticipants must be a number'
 			);
-			assert(typeof price === 'number', 'Price must be a decimal');
+			assert(typeof price === 'number', 'Price must be a number');
 			assert(typeof imageUrl === 'string', 'ImageUrl must be a string');
 			assert(typeof name === 'string', 'Name must be a string');
 			assert(
@@ -44,16 +44,6 @@ const controller = {
 			);
 
 			// Validating after making sure the variables are of the right type
-			// Values must be 0 or 1
-			assert(isVega == 0 || isVega == 1, 'IsVega must be either 0 or 1');
-			assert(
-				isVegan == 0 || isVegan == 1,
-				'IsVegan must be either 0 or 1'
-			);
-			assert(
-				isToTakeHome == 0 || isToTakeHome == 1,
-				'IsToTakeHome must be either 0 or 1'
-			);
 			assert(
 				allergenes
 					.replace('gluten', '')
@@ -125,9 +115,17 @@ const controller = {
 							// Handle error after the release
 							if (error) throw error;
 
+							const meal = results[0];
+
+							meal.isActive = meal.isActive == 1 ? true : false;
+							meal.isVega = meal.isVega == 1 ? true : false;
+							meal.isVegan = meal.isVegan == 1 ? true : false;
+							meal.isToTakeHome =
+								meal.isToTakeHome == 1 ? true : false;
+
 							res.status(200).json({
 								status: 200,
-								result: results[0],
+								result: meal,
 							});
 						}
 					);
@@ -225,9 +223,20 @@ const controller = {
 									// Handle error after the release
 									if (error) throw error;
 
+									const meal = results[0];
+
+									meal.isActive =
+										meal.isActive == 1 ? true : false;
+									meal.isVega =
+										meal.isVega == 1 ? true : false;
+									meal.isVegan =
+										meal.isVegan == 1 ? true : false;
+									meal.isToTakeHome =
+										meal.isToTakeHome == 1 ? true : false;
+
 									res.status(200).json({
 										status: 200,
-										result: results[0],
+										result: meal,
 									});
 								}
 							);
@@ -254,6 +263,14 @@ const controller = {
 
 					// Handle error after the release.
 					if (error) throw error;
+
+					results.forEach((result) => {
+						result.isActive = result.isActive == 1 ? true : false;
+						result.isVega = result.isVega == 1 ? true : false;
+						result.isVegan = result.isVegan == 1 ? true : false;
+						result.isToTakeHome =
+							result.isToTakeHome == 1 ? true : false;
+					});
 
 					// Don't use the connection here, it has been returned to the pool.
 					logger.debug(`#results: ${results.length}`);
@@ -306,6 +323,11 @@ const controller = {
 					}
 
 					const meal = results[0];
+
+					meal.isActive = meal.isActive == 1 ? true : false;
+					meal.isVega = meal.isVega == 1 ? true : false;
+					meal.isVegan = meal.isVegan == 1 ? true : false;
+					meal.isToTakeHome = meal.isToTakeHome == 1 ? true : false;
 
 					res.status(200).json({
 						status: 200,
