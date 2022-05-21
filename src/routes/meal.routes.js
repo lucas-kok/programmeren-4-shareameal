@@ -11,7 +11,7 @@ routes.post(
 );
 
 // UC-302: Update a meal
-routes.post(
+routes.put(
 	'/meal/:id',
 	authController.validateToken,
 	mealController.validateMeal,

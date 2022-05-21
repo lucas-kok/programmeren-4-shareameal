@@ -204,7 +204,7 @@ describe('Manage meals', () => {
 
 		it('TC-302-1: When a required input is missing, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post(`/api/meal/${validMealId}`)
+				.put(`/api/meal/${validMealId}`)
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
@@ -240,7 +240,7 @@ describe('Manage meals', () => {
 
 		it('TC-302-2: When a user is not signed in, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post('/api/meal')
+				.put(`/api/meal/${validMealId}`)
 				.send({
 					name: 'Broodje krokante kip',
 					description:
@@ -272,7 +272,7 @@ describe('Manage meals', () => {
 
 		it('TC-302-3: When the user doesn not own the meal, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post(`/api/meal/${validMealId}`)
+				.put(`/api/meal/${validMealId}`)
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 3 }, jwtSecretKey),
@@ -326,7 +326,7 @@ describe('Manage meals', () => {
 			};
 
 			chai.request(server)
-				.post(`/api/meal/${invalidMealId}`)
+				.put(`/api/meal/${invalidMealId}`)
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
@@ -366,7 +366,7 @@ describe('Manage meals', () => {
 			};
 
 			chai.request(server)
-				.post(`/api/meal/${validMealId}`)
+				.put(`/api/meal/${validMealId}`)
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
