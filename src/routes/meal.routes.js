@@ -35,4 +35,11 @@ routes.delete(
 	mealController.deleteMeal
 );
 
+// UC-401 & UC-402: Participating and Siging off for a meal
+routes.get(
+	'/meal/:mealId/participate',
+	authController.validateToken,
+	mealController.manageParticipation
+);
+
 module.exports = routes;

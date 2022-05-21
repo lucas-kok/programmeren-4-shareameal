@@ -32,7 +32,9 @@ const INSERT_MEALS =
 	"(1, 'Meal A', 'description', 'image url', NOW(), 5, 6.50, 1)," +
 	"(2, 'Meal B', 'description', 'image url', NOW(), 5, 6.50, 1);";
 
-const invalidToken = 'THisTokenIsNotValid';
+const INSERT_PARTICIPATION =
+	'INSERT INTO `meal_participants_user` (`mealId`, `userId`) VALUES (1, 1);';
+
 const validMealId = 1;
 const invalidMealId = -1;
 
@@ -654,6 +656,180 @@ describe('Manage meals', () => {
 						.that.equals(
 							`Meal with Id: ${validMealId} has been deleted`
 						);
+
+					done();
+				});
+		});
+	});
+
+	describe('UC-401 Participating a user in a meal /api/meal/:mealId/participate', () => {
+		beforeEach((done) => {
+			dbconnection.getConnection(function (err, connection) {
+				if (err) throw err; // Not connected!
+
+				connection.query(
+					CLEAR_DB + INSERT_USERS + INSERT_MEALS,
+					function (error, result, field) {
+						// When done with the connection, release it.
+						connection.release();
+
+						// Handle error after the release
+						if (error) throw error;
+
+						done();
+					}
+				);
+			});
+		});
+
+		it('TC-401-1 User not logged in when trying to participate in a meal', (done) => {
+			chai.request(server)
+				.get('/api/meal/1/participate')
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					const { status, message } = res.body;
+
+					status.should.equals(401);
+					message.should.be
+						.a('string')
+						.that.equals('Authorization header missing');
+
+					done();
+				});
+		});
+
+		it('TC-401-2 Meal that user is trying to participate in doesnt exist', (done) => {
+			chai.request(server)
+				.get(`/api/meal/${invalidMealId}/participate`)
+				.set({
+					Authorization:
+						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
+				})
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					const { status, message } = res.body;
+
+					status.should.equals(404);
+					message.should.be
+						.a('string')
+						.that.equals(
+							`Meal with Id: ${invalidMealId} not found`
+						);
+
+					done();
+				});
+		});
+
+		it('TC-401-3 User has succesfully participated in a meal', (done) => {
+			chai.request(server)
+				.get(`/api/meal/${validMealId}/participate`)
+				.set({
+					Authorization:
+						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
+				})
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					console.log(res.body);
+					const { status, result } = res.body;
+
+					status.should.equals(200);
+					expect(result).to.deep.equal([
+						{
+							currentlyParticipating: true,
+							currentAmountOfParticipants: 1,
+						},
+					]);
+
+					done();
+				});
+		});
+	});
+
+	describe('UC-402 Removing a user participation from a meal /api/meal/:mealId/participate', () => {
+		beforeEach((done) => {
+			dbconnection.getConnection(function (err, connection) {
+				if (err) throw err; // Not connected!
+
+				connection.query(
+					CLEAR_DB +
+						INSERT_USERS +
+						INSERT_MEALS +
+						INSERT_PARTICIPATION,
+					function (error, result, field) {
+						// When done with the connection, release it.
+						connection.release();
+
+						// Handle erro after the release
+						if (error) throw error;
+
+						done();
+					}
+				);
+			});
+		});
+
+		it('TC-402-1 User not logged in when trying to remove participation in a meal', (done) => {
+			chai.request(server)
+				.get('/api/meal/1/participate')
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					const { status, message } = res.body;
+
+					status.should.equals(401);
+					message.should.be
+						.a('string')
+						.that.equals('Authorization header missing');
+
+					done();
+				});
+		});
+
+		it('TC-402-2 Meal that user is trying to remove participation from doesnt exist', (done) => {
+			chai.request(server)
+				.get(`/api/meal/${invalidMealId}/participate`)
+				.set({
+					Authorization:
+						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
+				})
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					const { status, message } = res.body;
+
+					status.should.equals(404);
+					message.should.be
+						.a('string')
+						.that.equals(
+							`Meal with Id: ${invalidMealId} not found`
+						);
+
+					done();
+				});
+		});
+
+		it('TC-402-3 User has succesfully removed participation from a meal', (done) => {
+			chai.request(server)
+				.get('/api/meal/1/participate')
+				.set({
+					Authorization:
+						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
+				})
+				.end((err, res) => {
+					res.should.be.an('object');
+
+					const { status, result } = res.body;
+
+					status.should.equals(200);
+					expect(result).to.deep.equal([
+						{
+							currentlyParticipating: false,
+							currentAmountOfParticipants: 0,
+						},
+					]);
 
 					done();
 				});

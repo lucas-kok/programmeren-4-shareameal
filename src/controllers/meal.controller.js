@@ -358,6 +358,124 @@ const controller = {
 			);
 		});
 	},
+
+	// UC-401 & UC-402: Participate and Sign off for a meal
+	manageParticipation: (req, res) => {
+		const mealId = req.params.mealId;
+		const userId = req.userId;
+
+		let meal;
+		let currentAmountOfParticipants = 0;
+
+		dbconnection.getConnection(function (err, connection) {
+			if (err) throw err;
+
+			// Retrieving the data of the selected meals
+			connection.query(
+				`SELECT * FROM meal WHERE id = ${mealId};`,
+				function (error, results, fields) {
+					if (error) throw error;
+
+					// Returning if no records of the meal are found
+					if (results.length <= 0) {
+						connection.release();
+
+						return res.status(404).json({
+							status: 404,
+							message: `Meal with Id: ${mealId} not found`,
+						});
+					}
+
+					meal = results[0];
+
+					// Retrieving the amount of participations for the selected meal
+					connection.query(
+						`SELECT * FROM meal_participants_user WHERE mealId = ${mealId};`,
+						function (error, results, fields) {
+							currentAmountOfParticipants = results.length;
+
+							// Looking whether to insert or delete a participation
+							connection.query(
+								`SELECT * FROM meal_participants_user WHERE mealId = ${mealId} AND userId = ${userId};`,
+								function (error, results, fields) {
+									if (error) throw error;
+
+									// No participating record found, so needs to be inserted
+									if (results.length == 0) {
+										// Returning when there are no spots left
+										if (
+											currentAmountOfParticipants >=
+											meal.maxAmountOfParticipants
+										) {
+											connection.release();
+											res.status(409).json({
+												status: 409,
+												message: `Maximum amount of participants has been reached`,
+											});
+										}
+
+										// Inserting the participation to the given meal
+										connection.query(
+											`INSERT INTO meal_participants_user (mealId, userId) VALUES(${mealId}, ${userId});`,
+											function (error, results, fields) {
+												connection.release();
+
+												if (error) throw error;
+
+												currentAmountOfParticipants++;
+
+												logger.debug(
+													'User has sucessfully been participated'
+												);
+
+												res.status(200).json({
+													status: 200,
+													result: [
+														{
+															currentlyParticipating: true,
+															currentAmountOfParticipants:
+																currentAmountOfParticipants,
+														},
+													],
+												});
+											}
+										);
+									} else {
+										// If records found, removing the participation
+										connection.query(
+											`DELETE FROM meal_participants_user WHERE mealId = ${mealId} AND userId = ${userId};`,
+											function (error, results, fields) {
+												connection.release();
+
+												if (error) throw error;
+
+												currentAmountOfParticipants--;
+
+												logger.debug(
+													'User participation has sucessfully been removed'
+												);
+
+												res.status(200).json({
+													status: 200,
+													result: [
+														{
+															currentlyParticipating: false,
+															currentAmountOfParticipants:
+																currentAmountOfParticipants,
+														},
+													],
+												});
+											}
+										);
+									}
+								}
+							);
+						}
+					);
+				}
+			);
+		});
+	},
 };
 
 module.exports = controller;
