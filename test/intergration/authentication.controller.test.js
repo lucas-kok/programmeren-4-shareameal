@@ -126,7 +126,7 @@ describe('Authentication', () => {
 					const { status, message } = res.body;
 					console.log(res.body.statusCode);
 
-					status.should.equals(401);
+					status.should.equals(404);
 					message.should.be
 						.a('string')
 						.that.equals('User not found or password invalid');
