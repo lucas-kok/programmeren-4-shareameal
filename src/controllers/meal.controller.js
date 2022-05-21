@@ -271,6 +271,15 @@ const controller = {
 	getMeal: (req, res) => {
 		const mealId = req.params.id;
 
+		if (isNaN(mealId)) {
+			logger.warn('Id must be a number');
+
+			return res.status(401).json({
+				status: 401,
+				result: 'Id must be a number',
+			});
+		}
+
 		logger.debug(`GetMeal called with Id: ${mealId}`);
 
 		dbconnection.getConnection(function (err, connection) {
