@@ -52,7 +52,7 @@ describe('Authentication', () => {
 
 		it('TC-101-1: When a required input is missing, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post('/auth/login')
+				.post('/api/auth/login')
 				.send({
 					emailAdress: 'lucas.kok@hotmail.nl',
 					// Password is missing
@@ -73,7 +73,7 @@ describe('Authentication', () => {
 
 		it('TC-101-2: When an email is not valid, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post('/auth/login')
+				.post('/api/auth/login')
 				.send({
 					emailAdress: 06111,
 					password: 'JonkerFr02_',
@@ -94,7 +94,7 @@ describe('Authentication', () => {
 
 		it('TC-101-3: When an password is not valid, a valid error should be returned', (done) => {
 			chai.request(server)
-				.post('/auth/login')
+				.post('/api/auth/login')
 				.send({
 					emailAdress: 'lucas.kok@hotmail.nl',
 					password: 112334455,
@@ -115,7 +115,7 @@ describe('Authentication', () => {
 
 		it(`TC-101-4: When no user is linked to the tokens' Id, , a valid error should be returned`, (done) => {
 			chai.request(server)
-				.post('/auth/login')
+				.post('/api/auth/login')
 				.send({
 					emailAdress: 'info@pekict.nl',
 					password: 'ThisIsMyPassword!',
@@ -142,7 +142,7 @@ describe('Authentication', () => {
 			};
 
 			chai.request(server)
-				.post('/auth/login')
+				.post('/api/auth/login')
 				.send(newUser)
 				.end((err, res) => {
 					res.should.be.an('object');

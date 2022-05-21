@@ -21,7 +21,7 @@ app.all('*', (req, res, next) => {
 // Makes sure that the router will only recieve /api requests
 app.use('/api', userRoutes);
 app.use('/api', mealRoutes);
-app.use('/auth', authRoutes);
+app.use('/api', authRoutes);
 
 // No valid request found
 app.all('*', (req, res) => {
