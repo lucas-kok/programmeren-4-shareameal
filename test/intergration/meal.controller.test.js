@@ -84,8 +84,6 @@ describe('Manage meals', () => {
 
 					const { status, message } = res.body;
 
-					console.log(res.body);
-
 					status.should.equals(400);
 					message.should.be
 						.a('string')
@@ -167,7 +165,7 @@ describe('Manage meals', () => {
 						isVega: 0,
 						isVegan: 1,
 						isToTakeHome: 1,
-						dateTime: '2022-05-17T08:27:15.000Z',
+						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
 						allergenes: 'noten',
@@ -388,7 +386,7 @@ describe('Manage meals', () => {
 						isVega: 0,
 						isVegan: 1,
 						isToTakeHome: 1,
-						dateTime: '2022-05-17T08:27:15.000Z',
+						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
 						allergenes: 'noten',
