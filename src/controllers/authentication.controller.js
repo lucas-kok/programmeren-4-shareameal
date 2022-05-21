@@ -13,14 +13,14 @@ const controller = {
 		try {
 			assert(
 				typeof emailAdress === 'string',
-				'EmailAdress must be a string.'
+				'EmailAdress must be a string'
 			);
-			assert(typeof password === 'string', 'Password must be a string.');
+			assert(typeof password === 'string', 'Password must be a string');
 			next();
-		} catch (ex) {
-			res.status(422).json({
-				status: 422,
-				result: ex.toString(),
+		} catch (error) {
+			res.status(400).json({
+				status: 400,
+				message: error.message,
 				datetime: new Date().toISOString(),
 			});
 		}
@@ -30,11 +30,14 @@ const controller = {
 		logger.info('ValidateToken called');
 		const authHeader = req.headers.authorization;
 
+		logger.debug('ValidateToken called');
+
 		if (!authHeader) {
 			logger.warn('Authorization header missing');
 
 			return res.status(401).json({
-				error: 'Authorization header missing!',
+				status: 401,
+				message: 'Authorization header missing',
 				datetime: new Date().toISOString(),
 			});
 		}
@@ -48,7 +51,8 @@ const controller = {
 
 				logger.warn('Not authorized');
 				return res.status(401).json({
-					error: 'Not authorized',
+					status: 401,
+					message: 'Not authorized',
 					datetime: new Date().toISOString(),
 				});
 			}
@@ -57,6 +61,7 @@ const controller = {
 				logger.debug('Token is valid');
 				// User heeft toegang. Voeg UserId uit payload toe aan
 				// request, voor ieder volgend endpoint.
+				console.log(payload.userId);
 				req.userId = payload.userId;
 
 				next();
@@ -67,6 +72,8 @@ const controller = {
 	// Login
 	login: (req, res) => {
 		const { emailAdress, password } = req.body;
+
+		logger.debug('Login called');
 
 		dbconnection.getConnection(function (err, connection) {
 			if (err) {
@@ -108,7 +115,7 @@ const controller = {
 
 						return res.status(401).json({
 							status: 401,
-							result: 'User not found or password invalid',
+							message: 'User not found or password invalid',
 							datetime: new Date().toISOString(),
 						});
 					}

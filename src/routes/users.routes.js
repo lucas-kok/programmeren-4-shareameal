@@ -20,7 +20,7 @@ routes.get('/user', authController.validateToken, userController.getAllUsers);
 
 // UC-203: Request personal user profile
 routes.get(
-	'/user/profile/:token',
+	'/user/profile',
 	authController.validateToken,
 	userController.getPersonalUser
 );
@@ -29,11 +29,11 @@ routes.get(
 routes.get(
 	'/user/:userId',
 	authController.validateToken,
-	userController.getUserWithId
+	userController.getUser
 );
 
 // UC-205: Update a single user
-routes.post(
+routes.put(
 	'/user/:userId',
 	authController.validateToken,
 	userController.validateUser,
@@ -44,7 +44,7 @@ routes.post(
 routes.delete(
 	'/user/:userId',
 	authController.validateToken,
-	userController.deleteUserWithId
+	userController.deleteUser
 );
 
 // --------------------------------- End API User ----------------------------------- //
