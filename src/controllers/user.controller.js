@@ -182,6 +182,10 @@ const controller = {
 				// Don't use the connection here, it has been returned to the pool.
 				logger.debug(`#results: ${results.length}`);
 
+				results.forEach((result) => {
+					result.isActive = result.isActive == 1 ? true : false;
+				});
+
 				res.status(200).json({
 					status: 200,
 					result: results,
