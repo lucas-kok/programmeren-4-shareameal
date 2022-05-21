@@ -46,6 +46,13 @@ const controller = {
 				'This password is not valid, please use at least 8 characters, one digit, one lower case and one upper case.'
 			);
 
+			// Regex for valid dutch phonenumber
+			assert.match(
+				phoneNumber,
+				/(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)/,
+				'Phonenumber must be 10 digits long, example: 0612345678'
+			);
+
 			next();
 		} catch (error) {
 			const selectiveErrorInformation = {
@@ -203,7 +210,7 @@ const controller = {
 
 			// Use the connection
 			connection.query(
-				`SELECT * FROM user where id = ${userId}; SELECT * FROM meal WHERE cookId = ${userId};`,
+				`SELECT * FROM user where id = ${userId};`,
 				function (error, results, fields) {
 					// When done with the connection, release it.
 					connection.release();
@@ -228,7 +235,7 @@ const controller = {
 
 					res.status(200).json({
 						status: 200,
-						result: results,
+						result: results[0],
 					});
 				}
 			);
