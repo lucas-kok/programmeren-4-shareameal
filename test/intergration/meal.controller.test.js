@@ -373,6 +373,8 @@ describe('Manage meals', () => {
 				.end((err, res) => {
 					res.should.be.an('object');
 
+					console.log(res.body);
+
 					const { status, result } = res.body;
 
 					status.should.equals(200);

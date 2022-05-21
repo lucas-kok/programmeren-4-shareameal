@@ -4,18 +4,18 @@ const authController = require('../controllers/authentication.controller');
 
 // UC-301: Create a meal
 routes.post(
-    '/meal',
-    authController.validateToken,
-    mealController.validateMeal,
-    mealController.addMeal
+	'/meal',
+	authController.validateToken,
+	mealController.validateMeal,
+	mealController.addMeal
 );
 
 // UC-302: Update a meal
 routes.post(
-    '/meal/:mealId',
-    authController.validateToken,
-    mealController.validateMeal,
-    mealController.updateMeal
+	'/meal/:mealId',
+	authController.validateToken,
+	mealController.validateMeal,
+	mealController.updateMeal
 );
 
 // UC-303: Request list of meals
@@ -23,16 +23,16 @@ routes.get('/meal', authController.validateToken, mealController.getAllMeals);
 
 // UC-304: Request details of meal
 routes.get(
-    '/meal/:mealId',
-    authController.validateToken,
-    mealController.getMeal
+	'/meal/:mealId',
+	authController.validateToken,
+	mealController.getMeal
 );
 
 // UC-305: Delete meal
 routes.delete(
-    '/meal/:mealId',
-    authController.validateToken,
-    mealController.deleteMeal
+	'/meal/:mealId',
+	authController.validateToken,
+	mealController.deleteMeal
 );
 
 module.exports = routes;
