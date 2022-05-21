@@ -22,11 +22,7 @@ routes.post(
 routes.get('/meal', mealController.getAllMeals);
 
 // UC-304: Request details of meal
-routes.get(
-	'/meal/:mealId',
-	authController.validateToken,
-	mealController.getMeal
-);
+routes.get('/meal/:mealId', mealController.getMeal);
 
 // UC-305: Delete meal
 routes.delete(

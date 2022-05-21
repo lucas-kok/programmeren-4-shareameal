@@ -497,10 +497,6 @@ describe('Manage meals', () => {
 		it('TC-304-1: When a meal is not linked to the mealId, a valid error message should be returned', (done) => {
 			chai.request(server)
 				.get(`/api/meal/${invalidMealId}`)
-				.set({
-					Authorization:
-						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
-				})
 				.end((err, res) => {
 					res.should.be.an('object');
 
@@ -520,10 +516,6 @@ describe('Manage meals', () => {
 		it('TC-304-2: When a valid id is given, a meal object should be returned', (done) => {
 			chai.request(server)
 				.get(`/api/meal/${validMealId}`)
-				.set({
-					Authorization:
-						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
-				})
 				.end((err, res) => {
 					res.should.be.an('object');
 
