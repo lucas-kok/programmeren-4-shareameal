@@ -386,8 +386,8 @@ const controller = {
 				`The user with Id: ${userId} does not not belong to user with Id: ${userIdFromRequest}`
 			);
 
-			return res.status(400).json({
-				status: 400,
+			return res.status(403).json({
+				status: 403,
 				message: `The user with Id: ${userId} does not belong to user with Id: ${userIdFromRequest}`,
 			});
 		}

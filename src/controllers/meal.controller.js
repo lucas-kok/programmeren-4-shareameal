@@ -287,6 +287,7 @@ const controller = {
 	// UC-304: Request details of meal
 	getMeal: (req, res) => {
 		const mealId = req.params.id;
+		console.log(res.params);
 
 		if (isNaN(mealId)) {
 			logger.warn('Id must be a number');
