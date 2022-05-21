@@ -140,19 +140,19 @@ const controller = {
 	// UC-202: Get all users
 	getAllUsers: (req, res) => {
 		const queryParams = req.query;
-		const { name, isActive } = queryParams;
+		const { firstName, isActive } = queryParams;
 
 		logger.debug(
-			`GetAllUsers called, name: ${name} & isActive: ${isActive}`
+			`GetAllUsers called, name: ${firstName} & isActive: ${isActive}`
 		);
 
 		// Building the query string based on the input
 		let queryString = 'SELECT * FROM user';
-		if (name || isActive) {
+		if (firstName || isActive) {
 			queryString += ' WHERE ';
 
-			if (name) {
-				queryString += `firstName LIKE '%${name}%'`;
+			if (firstName) {
+				queryString += `firstName LIKE '%${firstName}%'`;
 
 				if (isActive) {
 					queryString += ' AND ';
