@@ -194,7 +194,7 @@ describe('Manage users', () => {
 						id: 3,
 						firstName: 'Lucas',
 						lastName: 'Kok',
-						isActive: 1,
+						isActive: true,
 						emailAdress: 'lucas.kok@homtail.nl',
 						password: 'MyPet540',
 						phoneNumber: '0640052439',

@@ -115,6 +115,7 @@ const controller = {
 							}
 
 							const newUser = results[0];
+							newUser.isActive = isActive == 1 ? true : false;
 
 							logger.debug(newUser);
 
