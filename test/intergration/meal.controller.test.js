@@ -426,10 +426,6 @@ describe('Manage meals', () => {
 		it('TC-303-1: When a list of meals is requested, a valid array of meals should be returned', (done) => {
 			chai.request(server)
 				.get(`/api/meal`)
-				.set({
-					Authorization:
-						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),
-				})
 				.end((err, res) => {
 					res.should.be.an('object');
 

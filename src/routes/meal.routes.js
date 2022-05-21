@@ -19,7 +19,7 @@ routes.post(
 );
 
 // UC-303: Request list of meals
-routes.get('/meal', authController.validateToken, mealController.getAllMeals);
+routes.get('/meal', mealController.getAllMeals);
 
 // UC-304: Request details of meal
 routes.get(
