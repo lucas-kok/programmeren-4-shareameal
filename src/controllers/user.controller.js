@@ -119,7 +119,7 @@ const controller = {
 
 							logger.debug(newUser);
 
-							res.status(200).json({
+							res.status(201).json({
 								status: 201,
 								result: newUser,
 							});
