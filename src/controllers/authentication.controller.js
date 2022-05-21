@@ -16,6 +16,22 @@ const controller = {
 				'EmailAdress must be a string'
 			);
 			assert(typeof password === 'string', 'Password must be a string');
+
+			// Validating after making sure the email and password are strings
+			// EmailAdress must be valid (found this regex online, not aware of all details)
+			assert.match(
+				emailAdress,
+				/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+				'The emailAdress is not valid'
+			);
+
+			// Password contains 8-15 characters which contains at least one lower- and uppercase letter, one special character and one digit
+			assert.match(
+				password,
+				/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
+				'This password is not valid, please use at least 8 characters, one digit, one lower case and one upper case.'
+			);
+
 			next();
 		} catch (error) {
 			res.status(400).json({

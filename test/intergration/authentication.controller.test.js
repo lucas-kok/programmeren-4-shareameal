@@ -24,7 +24,7 @@ const CLEAR_DB =
 
 const INSERT_USERS =
 	'INSERT INTO user (id, firstName, lastName, isActive, emailAdress, password, phoneNumber, street, city) VALUES' +
-	"(1, 'Lucas', 'Kok', 1, 'lucas.kok@hotmail.nl', 'JonkerFr02_', '0640052439', 'Jonker Fransstraat', 'Rotterdam')," +
+	"(1, 'Lucas', 'Kok', 1, 'lucas.kok@hotmail.nl', 'JonkerFr02', '0640052439', 'Jonker Fransstraat', 'Rotterdam')," +
 	"(2, 'Sander', 'Hart', 1, 'sanderhart30@gmail.com', 'Jackie_ds2!', '0652243698', 'Bernhardstraat', 'Burgh-Haamstede');";
 
 const invalidToken = 'THisTokenIsNotValid';
@@ -76,7 +76,7 @@ describe('Authentication', () => {
 				.post('/api/auth/login')
 				.send({
 					emailAdress: 06111,
-					password: 'JonkerFr02_',
+					password: 'JonkerFr02',
 				})
 				.end((err, res) => {
 					res.should.be.an('object');
@@ -113,15 +113,17 @@ describe('Authentication', () => {
 				});
 		});
 
-		it(`TC-101-4: When no user is linked to the tokens' Id, , a valid error should be returned`, (done) => {
+		it(`TC-101-4: When no user is linked to the tokens' Id, a valid error should be returned`, (done) => {
 			chai.request(server)
 				.post('/api/auth/login')
 				.send({
 					emailAdress: 'info@pekict.nl',
-					password: 'ThisIsMyPassword!',
+					password: 'ThisIsMyPassword12',
 				})
 				.end((err, res) => {
 					res.should.be.an('object');
+
+					console.log(res.body);
 
 					const { status, message } = res.body;
 					console.log(res.body.statusCode);
@@ -138,7 +140,7 @@ describe('Authentication', () => {
 		it('TC-101-5: When all parameters are valid, a valid token should be returned', (done) => {
 			const newUser = {
 				emailAdress: 'lucas.kok@hotmail.nl',
-				password: 'JonkerFr02_',
+				password: 'JonkerFr02',
 			};
 
 			chai.request(server)
@@ -148,6 +150,7 @@ describe('Authentication', () => {
 					res.should.be.an('object');
 
 					const { status, result } = res.body;
+					console.log(res.body);
 
 					// Extracting the Id from the token
 					const token = result.token;
