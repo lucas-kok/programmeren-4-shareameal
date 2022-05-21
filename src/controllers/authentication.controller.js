@@ -140,10 +140,11 @@ const controller = {
 						'Passwords matches, sending userinfo and valid token'
 					);
 
-					const { ...userInfo } = results[0];
+					const userInfo = results[0];
 					const payload = {
 						userId: userInfo.id,
 					};
+					userInfo.isActive = userInfo.isActive == 1 ? true : false;
 
 					jwt.sign(
 						payload,

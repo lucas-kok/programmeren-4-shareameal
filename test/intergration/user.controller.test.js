@@ -267,6 +267,8 @@ describe('Manage users', () => {
 
 					const { status, result } = res.body;
 
+					console.log(err);
+
 					status.should.equals(200);
 					expect(result).to.deep.equal([]);
 
@@ -352,7 +354,7 @@ describe('Manage users', () => {
 
 		it('TC-202-6: When searching on a name, a array with users containing matching names should be returned', (done) => {
 			chai.request(server)
-				.get('/api/user?name=kok')
+				.get('/api/user?name=lucas')
 				.set({
 					Authorization:
 						'Bearer ' + jwt.sign({ userId: 1 }, jwtSecretKey),

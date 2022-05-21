@@ -145,7 +145,7 @@ const controller = {
 			queryString += ' WHERE ';
 
 			if (name) {
-				queryString += `concat(firstName , ' ' , lastName) LIKE '${name}%' OR firstName LIKE '${name}%' OR  firstName LIKE '%${name}' OR lastName LIKE '${name}%'  OR lastName LIKE '%${name}'`;
+				queryString += `firstName LIKE '%${name}%'`;
 
 				if (isActive) {
 					queryString += ' AND ';
