@@ -686,7 +686,7 @@ describe('Manage users', () => {
 
 					const { status, message } = res.body;
 
-					status.should.equals(400);
+					status.should.equals(403);
 					message.should.be
 						.a('string')
 						.that.equals(
