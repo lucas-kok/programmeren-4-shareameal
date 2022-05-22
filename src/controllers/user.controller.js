@@ -385,7 +385,7 @@ const controller = {
 
 			// Use the connection
 			connection.query(
-				`DELETE FROM user WHERE id = ${userId}`,
+				`DELETE FROM user WHERE id = ${userId};`,
 				function (error, results, fields) {
 					// When done with the connection, release it.
 					connection.release();
