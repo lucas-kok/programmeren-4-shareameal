@@ -74,7 +74,7 @@ describe('Manage meals', () => {
 					isVega: false,
 					isVegan: true,
 					isToTakeHome: true,
-					dateTime: '2022-05-17 08:27:15',
+					dateTime: '2022-05-17T08:27:15.000Z',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
 					allergenes: ['noten'],
@@ -106,7 +106,7 @@ describe('Manage meals', () => {
 					isVega: false,
 					isVegan: true,
 					isToTakeHome: true,
-					dateTime: '2022-05-17 08:27:15',
+					dateTime: '2022-05-17T08:27:15.000Z',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
 					allergenes: ['noten'],
@@ -136,7 +136,7 @@ describe('Manage meals', () => {
 				isVega: false,
 				isVegan: true,
 				isToTakeHome: true,
-				dateTime: '2022-05-17 08:27:15',
+				dateTime: '2022-05-17T08:27:15.000Z',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
 				allergenes: ['noten'],
@@ -219,7 +219,7 @@ describe('Manage meals', () => {
 					isVega: false,
 					isVegan: true,
 					isToTakeHome: true,
-					dateTime: '2022-05-17 08:27:15',
+					dateTime: '2022-05-17T08:27:15.000Z',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
 					allergenes: ['noten'],
@@ -251,7 +251,7 @@ describe('Manage meals', () => {
 					isVega: false,
 					isVegan: true,
 					isToTakeHome: true,
-					dateTime: '2022-05-17 08:27:15',
+					dateTime: '2022-05-17T08:27:15.000Z',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
 					allergenes: ['noten'],
@@ -287,7 +287,7 @@ describe('Manage meals', () => {
 					isVega: false,
 					isVegan: true,
 					isToTakeHome: true,
-					dateTime: '2022-05-17 08:27:15',
+					dateTime: '2022-05-17T08:27:15.000Z',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
 					allergenes: ['noten'],
@@ -319,7 +319,7 @@ describe('Manage meals', () => {
 				isVega: false,
 				isVegan: true,
 				isToTakeHome: true,
-				dateTime: '2022-05-17 08:27:15',
+				dateTime: '2022-05-17T08:27:15.000Z',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
 				allergenes: ['noten'],
@@ -359,7 +359,7 @@ describe('Manage meals', () => {
 				isVega: false,
 				isVegan: true,
 				isToTakeHome: true,
-				dateTime: '2022-05-17 08:27:15',
+				dateTime: '2022-05-17T08:27:15.000Z',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
 				allergenes: ['noten'],

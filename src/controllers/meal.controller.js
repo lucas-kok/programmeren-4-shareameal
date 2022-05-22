@@ -74,7 +74,7 @@ const controller = {
 
 			// Use the connection
 			connection.query(
-				`INSERT INTO meal (isActive, isVega, isVegan, isToTakeHome, dateTime, maxAmountOfParticipants, price, imageUrl, cookId, name, description, allergenes) VALUES (${isActive}, ${isVega}, ${isVegan}, ${isToTakeHome}, '${dateTime}', ${maxAmountOfParticipants}, ${price}, '${imageUrl}', ${cookId}, '${name}', '${description}', '${allergenes}');`,
+				`INSERT INTO meal (isActive, isVega, isVegan, isToTakeHome, dateTime, maxAmountOfParticipants, price, imageUrl, cookId, name, description, allergenes) VALUES (${isActive}, ${isVega}, ${isVegan}, ${isToTakeHome}, STR_TO_DATE('${dateTime}', '%Y-%m-%dT%H:%i:%s.%fZ'), ${maxAmountOfParticipants}, ${price}, '${imageUrl}', ${cookId}, '${name}', '${description}', '${allergenes}');`,
 
 				function (error, results, fields) {
 					// When done with the connection, release it.
@@ -184,7 +184,7 @@ const controller = {
 					}
 
 					connection.query(
-						`UPDATE meal SET isActive = ${isActive}, isVega = ${isVega}, isVegan = ${isVegan}, isToTakeHome = ${isToTakeHome}, dateTime = STR_TO_DATE('${dateTime}', "%m-%d-%Y %H:%i:%s"), maxAmountOfParticipants = ${maxAmountOfParticipants}, price = ${price}, imageUrl = '${imageUrl}', name = '${name}', description = '${description}', allergenes = '${allergenes}' WHERE id = ${mealId};`,
+						`UPDATE meal SET isActive = ${isActive}, isVega = ${isVega}, isVegan = ${isVegan}, isToTakeHome = ${isToTakeHome}, dateTime = STR_TO_DATE('${dateTime}', '%Y-%m-%dT%H:%i:%s.%fZ'), maxAmountOfParticipants = ${maxAmountOfParticipants}, price = ${price}, imageUrl = '${imageUrl}', name = '${name}', description = '${description}', allergenes = '${allergenes}' WHERE id = ${mealId};`,
 
 						function (error, results, fields) {
 							// When done with the connection, release it.
