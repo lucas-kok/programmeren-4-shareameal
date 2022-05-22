@@ -294,6 +294,7 @@ const controller = {
 			return res.status(401).json({
 				status: 401,
 				result: 'Id must be a number',
+				params: req.params,
 			});
 		}
 
