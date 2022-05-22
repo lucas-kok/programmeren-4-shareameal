@@ -111,8 +111,8 @@ const controller = {
 								meal.isToTakeHome == 1 ? true : false;
 							meal.allergenes = meal.allergenes.split(',');
 
-							res.status(200).json({
-								status: 200,
+							res.status(201).json({
+								status: 201,
 								result: meal,
 							});
 						}
@@ -225,8 +225,8 @@ const controller = {
 									meal.allergenes =
 										meal.allergenes.split(',');
 
-									res.status(200).json({
-										status: 200,
+									res.status(201).json({
+										status: 201,
 										result: meal,
 									});
 								}

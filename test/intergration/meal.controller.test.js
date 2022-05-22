@@ -158,7 +158,7 @@ describe('Manage meals', () => {
 
 					console.log(res.body);
 
-					status.should.equals(200);
+					status.should.equals(201);
 					expect(result).to.deep.equal({
 						id: result.id,
 						cookId: 1,
@@ -379,7 +379,7 @@ describe('Manage meals', () => {
 
 					const { status, result } = res.body;
 
-					status.should.equals(200);
+					status.should.equals(201);
 					expect(result).to.deep.equal({
 						id: result.id,
 						cookId: 1,
