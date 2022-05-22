@@ -36,7 +36,7 @@ const controller = {
 			assert(typeof name === 'string', 'Name must be a string');
 			assert(
 				typeof description === 'string',
-				'Description must be a number'
+				'Description must be a string'
 			);
 
 			next();
@@ -109,6 +109,7 @@ const controller = {
 							meal.isVegan = meal.isVegan == 1 ? true : false;
 							meal.isToTakeHome =
 								meal.isToTakeHome == 1 ? true : false;
+							meal.price = parseFloat(meal.price);
 							meal.allergenes = meal.allergenes.split(',');
 
 							res.status(201).json({
@@ -222,6 +223,7 @@ const controller = {
 										meal.isVegan == 1 ? true : false;
 									meal.isToTakeHome =
 										meal.isToTakeHome == 1 ? true : false;
+									meal.price = parseFloat(meal.price);
 									meal.allergenes =
 										meal.allergenes.split(',');
 
@@ -261,6 +263,7 @@ const controller = {
 						result.isVegan = result.isVegan == 1 ? true : false;
 						result.isToTakeHome =
 							result.isToTakeHome == 1 ? true : false;
+						result.price = parseFloat(result.price);
 						result.allergenes = result.allergenes.split(',');
 					});
 
@@ -321,6 +324,7 @@ const controller = {
 					meal.isVega = meal.isVega == 1 ? true : false;
 					meal.isVegan = meal.isVegan == 1 ? true : false;
 					meal.isToTakeHome = meal.isToTakeHome == 1 ? true : false;
+					meal.price = parseFloat(meal.price);
 					meal.allergenes = meal.allergenes.split(',');
 
 					res.status(200).json({
