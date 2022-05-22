@@ -1,4 +1,5 @@
 const assert = require('assert');
+const { all } = require('../..');
 const dbconnection = require('../../database/dbconnection');
 const logger = require('../config/config').logger;
 const controller = {
@@ -15,7 +16,6 @@ const controller = {
 			imageUrl,
 			name,
 			description,
-			allergenes,
 		} = meal;
 
 		try {
@@ -37,20 +37,6 @@ const controller = {
 			assert(
 				typeof description === 'string',
 				'Description must be a number'
-			);
-			assert(
-				typeof allergenes === 'string',
-				'Allergenes must be a strings'
-			);
-
-			// Validating after making sure the variables are of the right type
-			assert(
-				allergenes
-					.replace('gluten', '')
-					.replace('lactose', '')
-					.replace('noten', '')
-					.replace(',', '').length == 0,
-				`Allergenes can only contain: 'Gluten', 'lactose' or 'noten'`
 			);
 
 			next();
@@ -78,9 +64,10 @@ const controller = {
 			imageUrl,
 			name,
 			description,
-			allergenes,
 		} = meal;
 		const cookId = req.userId;
+
+		const allergenes = req.body.allergenes.join();
 
 		dbconnection.getConnection(function (err, connection) {
 			if (err) throw err; // Not connected!
@@ -122,6 +109,7 @@ const controller = {
 							meal.isVegan = meal.isVegan == 1 ? true : false;
 							meal.isToTakeHome =
 								meal.isToTakeHome == 1 ? true : false;
+							meal.allergenes = meal.allergenes.split(',');
 
 							res.status(200).json({
 								status: 200,
@@ -160,8 +148,9 @@ const controller = {
 			imageUrl,
 			name,
 			description,
-			allergenes,
 		} = updatedMeal;
+
+		const allergenes = req.body.allergenes.join();
 
 		logger.debug(`UpdateMeal called with Id: ${mealId}`);
 
@@ -233,6 +222,8 @@ const controller = {
 										meal.isVegan == 1 ? true : false;
 									meal.isToTakeHome =
 										meal.isToTakeHome == 1 ? true : false;
+									meal.allergenes =
+										meal.allergenes.split(',');
 
 									res.status(200).json({
 										status: 200,
@@ -270,6 +261,7 @@ const controller = {
 						result.isVegan = result.isVegan == 1 ? true : false;
 						result.isToTakeHome =
 							result.isToTakeHome == 1 ? true : false;
+						result.allergenes = result.allergenes.split(',');
 					});
 
 					// Don't use the connection here, it has been returned to the pool.
@@ -329,6 +321,7 @@ const controller = {
 					meal.isVega = meal.isVega == 1 ? true : false;
 					meal.isVegan = meal.isVegan == 1 ? true : false;
 					meal.isToTakeHome = meal.isToTakeHome == 1 ? true : false;
+					meal.allergenes = meal.allergenes.split(',');
 
 					res.status(200).json({
 						status: 200,

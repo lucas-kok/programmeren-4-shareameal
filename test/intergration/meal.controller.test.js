@@ -77,7 +77,7 @@ describe('Manage meals', () => {
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
-					allergenes: 'noten',
+					allergenes: ['noten'],
 					maxAmountOfParticipants: 12,
 					price: 420.69,
 				})
@@ -109,7 +109,7 @@ describe('Manage meals', () => {
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
-					allergenes: 'noten',
+					allergenes: ['noten'],
 					maxAmountOfParticipants: 12,
 					price: 420.69,
 				})
@@ -139,7 +139,7 @@ describe('Manage meals', () => {
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
-				allergenes: 'noten',
+				allergenes: ['noten'],
 				maxAmountOfParticipants: 12,
 				price: 420.69,
 			};
@@ -156,6 +156,8 @@ describe('Manage meals', () => {
 
 					const { status, result } = res.body;
 
+					console.log(res.body);
+
 					status.should.equals(200);
 					expect(result).to.deep.equal({
 						id: result.id,
@@ -170,7 +172,7 @@ describe('Manage meals', () => {
 						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
-						allergenes: 'noten',
+						allergenes: ['noten'],
 						maxAmountOfParticipants: 12,
 						price: '420.69',
 						createDate: result.createDate,
@@ -220,7 +222,7 @@ describe('Manage meals', () => {
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
-					allergenes: 'noten',
+					allergenes: ['noten'],
 					maxAmountOfParticipants: 12,
 					price: 420.69,
 				})
@@ -252,7 +254,7 @@ describe('Manage meals', () => {
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
-					allergenes: 'noten',
+					allergenes: ['noten'],
 					maxAmountOfParticipants: 12,
 					price: 420.69,
 				})
@@ -288,7 +290,7 @@ describe('Manage meals', () => {
 					dateTime: '2022-05-17 08:27:15',
 					imageUrl:
 						'https://img3.restameta.com/950/288/4938944649502884.jpg',
-					allergenes: 'noten',
+					allergenes: ['noten'],
 					maxAmountOfParticipants: 12,
 					price: 420.69,
 				})
@@ -320,7 +322,7 @@ describe('Manage meals', () => {
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
-				allergenes: 'noten',
+				allergenes: ['noten'],
 				maxAmountOfParticipants: 12,
 				price: 420.69,
 			};
@@ -360,7 +362,7 @@ describe('Manage meals', () => {
 				dateTime: '2022-05-17 08:27:15',
 				imageUrl:
 					'https://img3.restameta.com/950/288/4938944649502884.jpg',
-				allergenes: 'noten',
+				allergenes: ['noten'],
 				maxAmountOfParticipants: 12,
 				price: 12.99,
 			};
@@ -393,7 +395,7 @@ describe('Manage meals', () => {
 						dateTime: result.dateTime,
 						imageUrl:
 							'https://img3.restameta.com/950/288/4938944649502884.jpg',
-						allergenes: 'noten',
+						allergenes: ['noten'],
 						maxAmountOfParticipants: 12,
 						price: '12.99',
 						createDate: result.createDate,
@@ -450,7 +452,7 @@ describe('Manage meals', () => {
 							updateDate: result[0].updateDate,
 							name: 'Meal A',
 							description: 'description',
-							allergenes: '',
+							allergenes: [''],
 						},
 						{
 							id: 2,
@@ -467,7 +469,7 @@ describe('Manage meals', () => {
 							updateDate: result[1].updateDate,
 							name: 'Meal B',
 							description: 'description',
-							allergenes: '',
+							allergenes: [''],
 						},
 					]);
 
@@ -539,7 +541,7 @@ describe('Manage meals', () => {
 						updateDate: result.updateDate,
 						name: 'Meal A',
 						description: 'description',
-						allergenes: '',
+						allergenes: [''],
 					});
 
 					done();
