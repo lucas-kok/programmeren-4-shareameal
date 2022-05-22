@@ -184,7 +184,7 @@ const controller = {
 					}
 
 					connection.query(
-						`UPDATE meal SET isActive = ${isActive}, isVega = ${isVega}, isVegan = ${isVegan}, isToTakeHome = ${isToTakeHome}, dateTime = '${dateTime}', maxAmountOfParticipants = ${maxAmountOfParticipants}, price = ${price}, imageUrl = '${imageUrl}', name = '${name}', description = '${description}', allergenes = '${allergenes}' WHERE id = ${mealId};`,
+						`UPDATE meal SET isActive = ${isActive}, isVega = ${isVega}, isVegan = ${isVegan}, isToTakeHome = ${isToTakeHome}, dateTime = STR_TO_DATE('${dateTime}', "%m-%d-%Y %H:%i:%s"), maxAmountOfParticipants = ${maxAmountOfParticipants}, price = ${price}, imageUrl = '${imageUrl}', name = '${name}', description = '${description}', allergenes = '${allergenes}' WHERE id = ${mealId};`,
 
 						function (error, results, fields) {
 							// When done with the connection, release it.

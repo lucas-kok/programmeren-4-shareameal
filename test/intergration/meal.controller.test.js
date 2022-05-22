@@ -379,8 +379,6 @@ describe('Manage meals', () => {
 
 					const { status, result } = res.body;
 
-					console.log(err);
-
 					status.should.equals(200);
 					expect(result).to.deep.equal({
 						id: result.id,
