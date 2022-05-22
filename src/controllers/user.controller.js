@@ -385,43 +385,52 @@ const controller = {
 
 			// Use the connection
 			connection.query(
-				`DELETE FROM user WHERE id = ${userId};`,
+				`DELETE FROM meal WHERE cookId = ${userId}`,
 				function (error, results, fields) {
-					// When done with the connection, release it.
-					connection.release();
+					connection.query(
+						`DELETE FROM user WHERE id = ${userId};`,
+						function (error, results, fields) {
+							// When done with the connection, release it.
+							connection.release();
 
-					// Handle error after the release.
-					if (error) throw error;
+							// Handle error after the release.
+							if (error) throw error;
 
-					// Don't use the connection here, it has been returned to the pool.
-					// Returning when no records are found
-					if (results.affectedRows == 0) {
-						logger.debug(`User with Id: ${userId} not found`);
+							// Don't use the connection here, it has been returned to the pool.
+							// Returning when no records are found
+							if (results.affectedRows == 0) {
+								logger.debug(
+									`User with Id: ${userId} not found`
+								);
 
-						return res.status(400).json({
-							status: 400,
-							message: `User with Id: ${userId} not found`,
-						});
-					}
+								return res.status(400).json({
+									status: 400,
+									message: `User with Id: ${userId} not found`,
+								});
+							}
 
-					// Account may only be deleted when the request comes from the owner
-					if (userId != userIdFromRequest) {
-						logger.warn(
-							`The user with Id: ${userId} does not not belong to user with Id: ${userIdFromRequest}`
-						);
+							// Account may only be deleted when the request comes from the owner
+							if (userId != userIdFromRequest) {
+								logger.warn(
+									`The user with Id: ${userId} does not not belong to user with Id: ${userIdFromRequest}`
+								);
 
-						return res.status(403).json({
-							status: 403,
-							message: `The user with Id: ${userId} does not belong to user with Id: ${userIdFromRequest}`,
-						});
-					}
+								return res.status(403).json({
+									status: 403,
+									message: `The user with Id: ${userId} does not belong to user with Id: ${userIdFromRequest}`,
+								});
+							}
 
-					logger.debug(`User with Id: ${userId} has been deleted`);
+							logger.debug(
+								`User with Id: ${userId} has been deleted`
+							);
 
-					res.status(200).json({
-						status: 200,
-						message: `User with Id: ${userId} has been deleted`,
-					});
+							res.status(200).json({
+								status: 200,
+								message: `User with Id: ${userId} has been deleted`,
+							});
+						}
+					);
 				}
 			);
 		});
