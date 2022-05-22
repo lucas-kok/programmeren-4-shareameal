@@ -139,10 +139,10 @@ const controller = {
 
         const updatedMeal = req.body;
         const {
-            isActive,
             isVega,
             isVegan,
             isToTakeHome,
+            isActive,
             dateTime,
             maxAmountOfParticipants,
             price,

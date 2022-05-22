@@ -292,7 +292,7 @@ describe('Manage meals', () => {
                 });
         });
 
-        it('TC-303-4: When no meal is linked to the given Id, a valid error message should be returned', (done) => {
+        it('TC-302-4: When no meal is linked to the given Id, a valid error message should be returned', (done) => {
             const newMeal = {
                 name: 'Broodje krokante kip',
                 description: 'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
@@ -329,7 +329,7 @@ describe('Manage meals', () => {
                 });
         });
 
-        it('TC-303-5: When all parameters are valid, a valid update response should be returned', (done) => {
+        it('TC-302-5: When all parameters are valid, a valid update response should be returned', (done) => {
             const newMeal = {
                 name: 'Broodje krokante kip',
                 description: 'Een lekker broodje krokante kip van Same Same met zoet-zure saus',
