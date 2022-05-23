@@ -385,6 +385,18 @@ const controller = {
 
         logger.debug(`DeleteUser called with Id: ${userId}`);
 
+        // Account may only be deleted when the request comes from the owner
+        if (userId != userIdFromRequest) {
+            logger.warn(
+                `The user with Id: ${userId} does not not belong to user with Id: ${userIdFromRequest}`
+            );
+
+            return res.status(403).json({
+                status: 403,
+                message: `The user with Id: ${userId} does not belong to user with Id: ${userIdFromRequest}`,
+            });
+        }
+
         dbconnection.getConnection(function(err, connection) {
             if (err) throw err; // Not connected!
 
@@ -411,18 +423,6 @@ const controller = {
                                 return res.status(400).json({
                                     status: 400,
                                     message: `User with Id: ${userId} not found`,
-                                });
-                            }
-
-                            // Account may only be deleted when the request comes from the owner
-                            if (userId != userIdFromRequest) {
-                                logger.warn(
-                                    `The user with Id: ${userId} does not not belong to user with Id: ${userIdFromRequest}`
-                                );
-
-                                return res.status(403).json({
-                                    status: 403,
-                                    message: `The user with Id: ${userId} does not belong to user with Id: ${userIdFromRequest}`,
                                 });
                             }
 

@@ -50,7 +50,7 @@ describe('Manage meals', () => {
                         // When done with the connection, release it.
                         connection.release();
 
-                        // Handle erro after the release
+                        // Handle error after the release
                         if (error) throw error;
 
                         done();
